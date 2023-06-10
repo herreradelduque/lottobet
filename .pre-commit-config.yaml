@@ -3,8 +3,18 @@ repos:
     rev: v2.3.0
     hooks:
     -   id: check-yaml
+    -   id: check-json
     -   id: end-of-file-fixer
     -   id: trailing-whitespace
+    -   id: check-merge-conflict
+    -   id: check-added-large-files
+    -   id: check-case-conflict
+    -   id: check-docstring-first
+    -   id: double-quote-string-fixer
+    -   id: end-of-file-fixer
+    -   id: name-tests-test
+    -   id: requirements-txt-fixer
+
 -   repo: https://github.com/psf/black
     rev: 22.10.0
     hooks:
@@ -14,3 +24,8 @@ repos:
     rev: v2.0.2  # Use the sha / tag you want to point at
     hooks:
     -   id: autopep8
+
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.3.0  # Use the sha / tag you want to point at
+    hooks:
+    -   id: mypy
