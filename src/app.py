@@ -26,7 +26,6 @@ logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 
 #    return None
 
-
 def df_acquisition() -> DataFrame:
     """This function returns a df with the last LaPrimitiva lottery results
 
@@ -123,22 +122,30 @@ def get_n_bets_f(all_combinations_arg: list[tuple[int, ...]], get_n_bets_arg: in
 
 
 if __name__ == '__main__':
+
+    number_of_bets = st.number_input('Insert a number of bets', min_value=int(1),
+                                     max_value=int(50), value=int(5), step=1)
+    st.write('The number of bets to get is ', number_of_bets)
+
+    # logging.info('Step 2: Acquire data: DONE!')
     # csv_acquisition()
+
     logging.info('Step 1: Download csv: DONE!')
     df = df_acquisition()
-    # print(df)
-    logging.info('Step 2: Acquire data: DONE!')
 
-    df_10 = last_n_draws(df)
+    if st.button('Obtener apuestas'):
 
-    df_10_nums, df_10_com = split_df(df_10)
+        df_10 = last_n_draws(df)
 
-    row_list = row_list_f(df_10_nums)
+        df_10_nums, df_10_com = split_df(df_10)
 
-    all_combinations = get_all_combinations(row_list, 6)
+        row_list = row_list_f(df_10_nums)
 
-    my_n_bets = get_n_bets_f(all_combinations, 5)
+        all_combinations = get_all_combinations(row_list, 6)
 
-    st.dataframe(df_10_nums)
-    # st.dataframe(row_list)
-    # st.dataframe(my_n_bets)
+        st.write('Your bets are here...:')
+        my_n_bets = get_n_bets_f(all_combinations, number_of_bets)
+
+        st.dataframe(my_n_bets)
+    else:
+        st.write('Please wait...')
