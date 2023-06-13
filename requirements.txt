@@ -3,7 +3,6 @@ brotlipy==0.7.0
 certifi==2023.5.7
 fonttools==4.25.0
 ipython-genutils==0.2.0
-mkl-service==2.4.0
 munkres==1.1.4
 pandas==1.5.3
 pandas-stubs==2.0.2.230605
