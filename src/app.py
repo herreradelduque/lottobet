@@ -1,6 +1,6 @@
 """Module providing utilities for La Primitiva bets"""
 import logging
-from typing import Iterable, Tuple, Sequence, AbstractSet, Any, Union, List, Iterator
+from typing import List
 
 import pandas as pd
 from pandas import DataFrame
