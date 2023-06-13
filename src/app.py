@@ -142,12 +142,12 @@ if __name__ == '__main__':
 
         row_list = row_list_f(df_10_nums)
         st.write(f'Calculating all posible combinations...')
-        all_combinations = get_all_combinations(row_list, 6)
+        # all_combinations = get_all_combinations(row_list, 6)
 
         st.write('Your bets are here...:')
 
-        my_n_bets = get_n_bets_f(all_combinations, number_of_bets)
+        # my_n_bets = get_n_bets_f(all_combinations, number_of_bets)
 
-        st.dataframe(my_n_bets)
+        # st.dataframe(my_n_bets)
     else:
         st.write('Please wait...')
