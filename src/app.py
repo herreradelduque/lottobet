@@ -139,7 +139,7 @@ if __name__ == '__main__':
     if st.button('Obtener apuestas'):
         logging.info('Step 1: Download csv: DONE!')
         df = df_acquisition()
-        last_n_draws_arg = 7
+        last_n_draws_arg = 5
         st.write(f'Downloading last {last_n_draws_arg} draws...')
         df_10 = last_n_draws(df, last_n_draws_arg)
         # st.write(f'Processing data...')
@@ -148,7 +148,8 @@ if __name__ == '__main__':
         row_list = row_list_f(df_10_nums)
         st.write(f'Calculating all posible combinations...')
         all_combinations = get_all_combinations(row_list, 6)
-
+        st.write(
+            f'{len(all_combinations)} possible combinations with {len(row_list)} different numbers')
         st.write('Your bets are here...:')
 
         my_n_bets = get_n_bets_f(all_combinations, number_of_bets)
