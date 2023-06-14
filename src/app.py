@@ -142,7 +142,7 @@ if __name__ == '__main__':
 
         row_list = row_list_f(df_10_nums)
         st.write(f'Calculating all posible combinations...')
-        # all_combinations = get_all_combinations(row_list, 6)
+        all_combinations = get_all_combinations(row_list, 6)
 
         st.write('Your bets are here...:')
 
