@@ -139,7 +139,7 @@ if __name__ == '__main__':
     if st.button('Obtener apuestas'):
         logging.info('Step 1: Download csv: DONE!')
         df = df_acquisition()
-        last_n_draws_arg = 6
+        last_n_draws_arg = 7
         st.write(f'Downloading last {last_n_draws_arg} draws...')
         df_10 = last_n_draws(df, last_n_draws_arg)
         # st.write(f'Processing data...')
