@@ -104,7 +104,13 @@ def get_all_combinations(my_list: list[int], num_elements: int) -> list[tuple[in
         The return a list of tuples
 
     """
-    return [tuple(combination) for combination in itertools.combinations(my_list, num_elements)]
+    if len(my_list) < num_elements:
+        raise ValueError('Number of elements exceeds the length of the list.')
+
+    combinations = [tuple(combination) for combination in itertools.combinations(
+        my_list, num_elements)]
+
+    return combinations
 
 
 def get_n_bets_f(all_combinations_arg: list[tuple[int, ...]], get_n_bets_arg: int) -> list[tuple[int, ...]]:
@@ -146,8 +152,8 @@ if __name__ == '__main__':
 
         st.write('Your bets are here...:')
 
-        # my_n_bets = get_n_bets_f(all_combinations, number_of_bets)
+        my_n_bets = get_n_bets_f(all_combinations, number_of_bets)
 
-        # st.dataframe(my_n_bets)
+        st.dataframe(my_n_bets)
     else:
         st.write('Please wait...')
