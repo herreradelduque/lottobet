@@ -149,7 +149,7 @@ if __name__ == '__main__':
         st.write(f'Calculating all posible combinations...')
         all_combinations = get_all_combinations(row_list, 6)
         st.write(
-            f'{len(all_combinations)} possible combinations with {len(row_list)} different numbers')
+            f'{len(all_combinations)} possible combinations with {len(set(row_list))} different numbers')
         st.write('Your bets are here...:')
 
         my_n_bets = get_n_bets_f(all_combinations, number_of_bets)
