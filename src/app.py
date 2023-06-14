@@ -137,13 +137,12 @@ if __name__ == '__main__':
     # csv_acquisition()
 
     if st.button('Obtener apuestas'):
-        # if number_of_bets > 0:
         logging.info('Step 1: Download csv: DONE!')
-        st.write(f'Downloading last draws...')
         df = df_acquisition()
-
-        df_10 = last_n_draws(df, 5)
-        st.write(f'Processing data...')
+        last_n_draws_arg = 6
+        st.write(f'Downloading last {last_n_draws_arg} draws...')
+        df_10 = last_n_draws(df, last_n_draws_arg)
+        # st.write(f'Processing data...')
         df_10_nums, df_10_com = split_df(df_10)
 
         row_list = row_list_f(df_10_nums)
@@ -156,4 +155,4 @@ if __name__ == '__main__':
 
         st.dataframe(my_n_bets)
     else:
-        st.write('Please wait...')
+        st.write('')
