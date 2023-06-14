@@ -144,7 +144,7 @@ if __name__ == '__main__':
         df = df_acquisition()
         # last_n_draws_arg = 5
         st.write(f'Downloading last {last_n_draws_arg} draws...')
-        df_10 = last_n_draws(df, last_n_draws_arg)
+        df_10 = last_n_draws(df_arg=df, recent=0, last_n=last_n_draws_arg)
         # st.write(f'Processing data...')
         df_10_nums, df_10_com = split_df(df_10)
 
