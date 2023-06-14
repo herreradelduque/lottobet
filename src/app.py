@@ -129,6 +129,9 @@ def get_n_bets_f(all_combinations_arg: list[tuple[int, ...]], get_n_bets_arg: in
 
 if __name__ == '__main__':
 
+    last_n_draws_arg = st.number_input('Insert a number of draws', min_value=int(2),
+                                       max_value=int(9), value=int(5), step=1)
+
     number_of_bets = st.number_input('Insert a number of bets', min_value=int(0),
                                      max_value=int(50), value=int(5), step=1)
     # st.write(f'You are going to get {number_of_bets} combinations')
@@ -139,7 +142,7 @@ if __name__ == '__main__':
     if st.button('Obtener apuestas'):
         logging.info('Step 1: Download csv: DONE!')
         df = df_acquisition()
-        last_n_draws_arg = 5
+        # last_n_draws_arg = 5
         st.write(f'Downloading last {last_n_draws_arg} draws...')
         df_10 = last_n_draws(df, last_n_draws_arg)
         # st.write(f'Processing data...')
