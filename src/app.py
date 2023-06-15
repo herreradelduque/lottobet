@@ -93,6 +93,26 @@ def row_list_f(df_arg: DataFrame) -> List[int]:
     return row_list_arg
 
 
+def row_list_com_f(df_arg: DataFrame) -> List[int]:
+    """This function returns  list with all the complement
+
+    Args:
+        df_arg: df with all the draws.
+
+    Returns:
+        The return a list
+
+    """
+    # Create an empty list
+    row_list_com_arg = []
+
+    # Iterate over each row
+    for _, rows in df_arg.iterrows():
+        for number in rows:
+            row_list_com_arg.append(number)
+    return row_list_com_arg
+
+
 def get_all_combinations(my_list: list[int], num_elements: int) -> list[tuple[int, ...]]:
     """This function calculates all the possible combinations.
 
@@ -149,7 +169,7 @@ if __name__ == '__main__':
         df_10_nums, df_10_com = split_df(df_10)
 
         row_list = row_list_f(df_10_nums)
-        st.write(f'Calculating all posible combinations...')
+        st.write(f'Calculating all possible combinations...')
         all_combinations = get_all_combinations(row_list, 6)
         st.write(
             f'{len(all_combinations)} possible combinations with {len(set(row_list))} different numbers')
@@ -158,5 +178,11 @@ if __name__ == '__main__':
         my_n_bets = get_n_bets_f(all_combinations, number_of_bets)
 
         st.dataframe(my_n_bets)
+
+        row_list_com = row_list_com_f(df_10_com)
+        st.write(f'Calculating all possible complimentary numbers...')
+        com_number = random.choice(row_list_com)
+        st.write(f'Complimentary number: {com_number}')
+
     else:
         st.write('')
