@@ -56,7 +56,7 @@ def last_n_draws(df_arg: DataFrame, recent: int = 0, last_n: int = 10) -> DataFr
         The return a df
 
     """
-    return df_arg.iloc[recent:last_n, 2:9]
+    return df_arg.iloc[recent:last_n+1, 2:9]
 
 
 def split_df(df_arg: DataFrame) -> tuple[DataFrame, DataFrame]:
@@ -164,6 +164,8 @@ if __name__ == '__main__':
 
         st.write(f'Downloading last {last_n_draws_arg} draws...')
         df_10 = last_n_draws(df_arg=df, recent=0, last_n=last_n_draws_arg)
+
+        st.dataframe(df.iloc[1:last_n_draws_arg+1, :])
 
         df_10_nums, df_10_com = split_df(df_10)
 
