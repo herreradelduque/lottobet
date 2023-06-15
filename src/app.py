@@ -184,7 +184,7 @@ if __name__ == '__main__':
         com_number = random.choice(row_list_com)
         st.write(f'Complimentary number: {com_number}')
 
-        com_number_df = pd.DataFrame({'Complimentary': com_number})
+        com_number_df = pd.DataFrame({'Complimentary': [com_number]})
         st.dataframe(com_number_df)
 
     else:
