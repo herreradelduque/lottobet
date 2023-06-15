@@ -25,7 +25,6 @@ logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 #        f.write(url_content)
 
 #    return None
-
 def df_acquisition() -> DataFrame:
     """This function returns a df with the last LaPrimitiva lottery results
 
@@ -165,14 +164,14 @@ if __name__ == '__main__':
 
         st.write(f'Downloading last {last_n_draws_arg} draws...')
         df_10 = last_n_draws(df_arg=df, recent=0, last_n=last_n_draws_arg)
-        # st.write(f'Processing data...')
+
         df_10_nums, df_10_com = split_df(df_10)
 
         row_list = row_list_f(df_10_nums)
         st.write(f'Calculating all possible combinations...')
         all_combinations = get_all_combinations(row_list, 6)
         st.write(
-            f'{len(all_combinations)} possible combinations with {len(set(row_list))} different numbers')
+            f'{len(all_combinations)} possible combinations with {len(set(row_list))} different numbers.')
         st.write('Your bets are here...:')
 
         my_n_bets = get_n_bets_f(all_combinations, number_of_bets)
@@ -182,9 +181,11 @@ if __name__ == '__main__':
         row_list_com = row_list_com_f(df_10_com)
         st.write(f'Calculating all possible complimentary numbers...')
         com_number = random.choice(row_list_com)
-        st.write(f'Complimentary number: {com_number}')
+        st.write(
+            f'{len(row_list_com)} possible combinations with {len(set(row_list_com))} different numbers.')
 
-        com_number_df = pd.DataFrame({'Complimentary': [com_number]})
+        com_number_df = pd.DataFrame({'Complimentary': [com_number]}).reset_index(
+            drop=True)['Complimentary']
         st.dataframe(com_number_df)
 
     else:
