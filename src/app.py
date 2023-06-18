@@ -1,6 +1,6 @@
 """Module providing utilities for La Primitiva bets"""
 import logging
-from typing import List
+from typing import List, Set, Any
 
 import pandas as pd
 from pandas import DataFrame
@@ -72,8 +72,8 @@ def split_df(df_arg: DataFrame) -> tuple[DataFrame, DataFrame]:
     return df_arg.iloc[:, :-1], df_arg.iloc[:, -1:]
 
 
-def row_list_f(df_arg: DataFrame) -> List[int]:
-    """This function returns  list with all the numbers
+def row_list_f(df_arg: DataFrame) -> Set[Any]:
+    """This function returns a list with all the numbers
 
     Args:
         df_arg: df with all the draws.
@@ -89,11 +89,11 @@ def row_list_f(df_arg: DataFrame) -> List[int]:
     for _, rows in df_arg.iterrows():
         for number in rows:
             row_list_arg.append(number)
-    return row_list_arg
+    return set(row_list_arg)
 
 
 def row_list_com_f(df_arg: DataFrame) -> List[int]:
-    """This function returns  list with all the complement
+    """This function returns a list with all the complement
 
     Args:
         df_arg: df with all the draws.
@@ -112,7 +112,7 @@ def row_list_com_f(df_arg: DataFrame) -> List[int]:
     return row_list_com_arg
 
 
-def get_all_combinations(my_list: list[int], num_elements: int) -> list[tuple[int, ...]]:
+def get_all_combinations(my_list: Set[int], num_elements: int) -> list[tuple[int, ...]]:
     """This function calculates all the possible combinations.
 
     Args:
@@ -165,7 +165,7 @@ if __name__ == '__main__':
         st.write(f'Downloading last {last_n_draws_arg} draws...')
         df_10 = last_n_draws(df_arg=df, recent=0, last_n=last_n_draws_arg)
 
-        st.dataframe(df.iloc[1:last_n_draws_arg+1, :])
+        st.dataframe(df.iloc[0:last_n_draws_arg, :])
 
         df_10_nums, df_10_com = split_df(df_10)
 
