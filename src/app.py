@@ -1,14 +1,15 @@
 """Module providing utilities for La Primitiva bets"""
 import logging
 from typing import List, Set, Any
-
+import itertools
+import random
 import pandas as pd
 from pandas import DataFrame
+
 # import requests
 # from datetime import date
 import streamlit as st
-import itertools
-import random
+
 
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 
@@ -24,6 +25,7 @@ logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 #    with open(f'../data/{today}.csv', 'wb') as f:
 #        f.write(url_content)
 
+
 #    return None
 def df_acquisition() -> DataFrame:
     """This function returns a df with the last LaPrimitiva lottery results
@@ -34,7 +36,8 @@ def df_acquisition() -> DataFrame:
         DataFrame: DataFrame with LaPrimitiva results"""
 
     logging.info(
-        'Getting LaPrimitiva results from: https://lawebdelaprimitiva.com/Primitiva/')
+        'Getting LaPrimitiva results from: https://lawebdelaprimitiva.com/Primitiva/'
+    )
 
     return pd.read_csv(
         'https://lawebdelaprimitiva.com/Primitiva/descarga_historico/2023/csv.html',
@@ -44,7 +47,9 @@ def df_acquisition() -> DataFrame:
     ).reset_index()
 
 
-def last_n_draws(df_arg: DataFrame, recent: int = 0, last_n: int = 10) -> DataFrame:
+def last_n_draws(
+    df_arg: DataFrame, recent: int = 0, last_n: int = 10
+) -> DataFrame:
     """This function returns the last n recent draws from the n recent.
 
     Args:
@@ -56,7 +61,7 @@ def last_n_draws(df_arg: DataFrame, recent: int = 0, last_n: int = 10) -> DataFr
         The return a df
 
     """
-    return df_arg.iloc[recent:last_n+1, 2:9]
+    return df_arg.iloc[recent:last_n, 1:8]
 
 
 def split_df(df_arg: DataFrame) -> tuple[DataFrame, DataFrame]:
@@ -112,7 +117,9 @@ def row_list_com_f(df_arg: DataFrame) -> List[int]:
     return row_list_com_arg
 
 
-def get_all_combinations(my_list: Set[int], num_elements: int) -> list[tuple[int, ...]]:
+def get_all_combinations(
+    my_list: Set[int], num_elements: int
+) -> list[tuple[int, ...]]:
     """This function calculates all the possible combinations.
 
     Args:
@@ -126,13 +133,17 @@ def get_all_combinations(my_list: Set[int], num_elements: int) -> list[tuple[int
     if len(my_list) < num_elements:
         raise ValueError('Number of elements exceeds the length of the list.')
 
-    combinations = [tuple(combination) for combination in itertools.combinations(
-        my_list, num_elements)]
+    combinations = [
+        tuple(combination)
+        for combination in itertools.combinations(my_list, num_elements)
+    ]
 
     return combinations
 
 
-def get_n_bets_f(all_combinations_arg: list[tuple[int, ...]], get_n_bets_arg: int) -> list[tuple[int, ...]]:
+def get_n_bets_f(
+    all_combinations_arg: list[tuple[int, ...]], get_n_bets_arg: int
+) -> list[tuple[int, ...]]:
     """This function returns a list with random combinations.
 
     Args:
@@ -147,12 +158,21 @@ def get_n_bets_f(all_combinations_arg: list[tuple[int, ...]], get_n_bets_arg: in
 
 
 if __name__ == '__main__':
+    last_n_draws_arg = st.number_input(
+        'Insert a number of draws',
+        min_value=int(2),
+        max_value=int(9),
+        value=int(5),
+        step=1,
+    )
 
-    last_n_draws_arg = st.number_input('Insert a number of draws', min_value=int(2),
-                                       max_value=int(9), value=int(5), step=1)
-
-    number_of_bets = st.number_input('Insert a number of bets', min_value=int(0),
-                                     max_value=int(50), value=int(2), step=1)
+    number_of_bets = st.number_input(
+        'Insert a number of bets',
+        min_value=int(0),
+        max_value=int(50),
+        value=int(2),
+        step=1,
+    )
     # st.write(f'You are going to get {number_of_bets} combinations')
 
     # logging.info('Step 2: Acquire data: DONE!')
@@ -165,15 +185,16 @@ if __name__ == '__main__':
         st.write(f'Downloading last {last_n_draws_arg} draws...')
         df_10 = last_n_draws(df_arg=df, recent=0, last_n=last_n_draws_arg)
 
-        st.dataframe(df.iloc[0:last_n_draws_arg, :])
+        st.dataframe(df_10.head())
 
         df_10_nums, df_10_com = split_df(df_10)
 
         row_list = row_list_f(df_10_nums)
-        st.write(f'Calculating all possible combinations...')
+        st.write('Calculating all possible combinations...')
         all_combinations = get_all_combinations(row_list, 6)
         st.write(
-            f'{len(all_combinations)} possible combinations with {len(set(row_list))} different numbers.')
+            f'{len(all_combinations)} possible combinations with {len(set(row_list))} different numbers.'
+        )
         st.write('Your bets are here...:')
 
         my_n_bets = get_n_bets_f(all_combinations, number_of_bets)
@@ -181,13 +202,15 @@ if __name__ == '__main__':
         st.dataframe(my_n_bets)
 
         row_list_com = row_list_com_f(df_10_com)
-        st.write(f'Calculating all possible complimentary numbers...')
+        st.write('Calculating all possible complimentary numbers...')
         com_number = random.choice(row_list_com)
         st.write(
-            f'{len(row_list_com)} possible combinations with {len(set(row_list_com))} different numbers.')
+            f'{len(row_list_com)} possible combinations with {len(set(row_list_com))} different numbers.'
+        )
 
-        com_number_df = pd.DataFrame({'Complimentary': [com_number]}).reset_index(
-            drop=True)['Complimentary']
+        com_number_df = pd.DataFrame(
+            {'Complimentary': [com_number]}
+        ).reset_index(drop=True)['Complimentary']
         st.dataframe(com_number_df)
 
     else:
