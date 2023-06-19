@@ -41,10 +41,9 @@ def df_acquisition() -> DataFrame:
 
     return pd.read_csv(
         'https://lawebdelaprimitiva.com/Primitiva/descarga_historico/2023/csv.html',
-        index_col=1,
         header=6,
         sep=';',
-    ).reset_index()
+    )
 
 
 def last_n_draws(
@@ -185,7 +184,7 @@ if __name__ == '__main__':
         st.write(f'Downloading last {last_n_draws_arg} draws...')
         df_10 = last_n_draws(df_arg=df, recent=0, last_n=last_n_draws_arg)
 
-        st.dataframe(df_10.head())
+        st.dataframe(df_10)
 
         df_10_nums, df_10_com = split_df(df_10)
 
