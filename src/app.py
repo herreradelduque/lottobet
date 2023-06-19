@@ -47,7 +47,7 @@ def df_acquisition() -> DataFrame:
 
 
 def last_n_draws(
-    df_arg: DataFrame, recent: int = 0, last_n: int = 10
+        df_arg: DataFrame, recent: int = 0, last_n: int = 10
 ) -> DataFrame:
     """This function returns the last n recent draws from the n recent.
 
@@ -60,7 +60,11 @@ def last_n_draws(
         The return a df
 
     """
-    return df_arg.iloc[recent:last_n, 1:8]
+    df_arg = df_arg.iloc[recent:last_n, :7]
+    col_names = ['N1', 'N2', 'N3', 'N4', 'N5', 'N6', 'C']
+    df_arg.columns = col_names
+
+    return df_arg
 
 
 def split_df(df_arg: DataFrame) -> tuple[DataFrame, DataFrame]:
